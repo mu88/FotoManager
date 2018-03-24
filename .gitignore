@@ -9,6 +9,9 @@ yarn-error.log*
 *.js
 *.js.map
 
+# Packaged application
+dist
+
 # Runtime data
 pids
 *.pid

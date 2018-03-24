@@ -4,7 +4,10 @@
   "description": "A simple FotoManager",
   "main": "App.js",
   "scripts": {
-    "start": "tsc App.ts && electron ."
+    "build": "tsc",
+    "start": "tsc && electron .",
+    "pack": "tsc && electron-builder --dir",
+    "dist": "tsc && electron-builder"
   },
   "repository": {
     "type": "git",
@@ -18,7 +21,16 @@
   "homepage": "https://github.com/mu88/FotoManager#readme",
   "devDependencies": {
     "electron": "1.8.4",
+    "electron-builder": "^20.6.2",
     "typescript": "^2.7.2"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "build": {
+    "appId": "FotoManager.0.0.1",
+    "productName": "FotoManager",
+    "win" : {
+      "target": "portable",
+      "icon": "Icon.ico"
+    }
+  }
 }

@@ -1,23 +1,24 @@
 {
   "name": "fotomanager",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A simple FotoManager",
-  "main": "main.js",
+  "main": "App.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "tsc App.ts && electron ."
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mu88/FotoManager.git"
   },
-  "author": "",
+  "author": "mu88",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/mu88/FotoManager/issues"
   },
   "homepage": "https://github.com/mu88/FotoManager#readme",
   "devDependencies": {
-    "electron": "^1.8.4"
-  }
+    "electron": "1.8.4",
+    "typescript": "^2.7.2"
+  },
+  "dependencies": {}
 }

@@ -26,8 +26,9 @@
   },
   "dependencies": {},
   "build": {
-    "appId": "FotoManager.0.0.1",
+    "appId": "${productName}.${version}",
     "productName": "FotoManager",
+    "artifactName": "${productName}.${ext}",
     "win" : {
       "target": "portable",
       "icon": "Icon.ico"

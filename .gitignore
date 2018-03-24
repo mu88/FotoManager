@@ -5,6 +5,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Derivates of the TypeScript compiler (JavaScript, Sourcemaps)
+*.js
+*.js.map
+
 # Runtime data
 pids
 *.pid

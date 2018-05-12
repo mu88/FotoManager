@@ -1,22 +1,26 @@
 <div>
-  <button (click)="openImages()">Bilder hinzufügen</button>
-  <label>Anzahl geladener Bilder: {{ NumberOfImages }}</label>
-  <label>Anzahl Kopien: {{ NumberOfCopies }}</label>
+  <button (click)="project.loadProject()">Projekt laden</button>
+  <button *ngIf="project.images.length > 0" (click)="project.saveProject()">Projekt speichern</button>
 </div>
 <div>
-  <button (click)="exportImages()">Bilder exportieren</button>
-  <label>{{ ExportStatus }}</label>
+  <button (click)="project.openImages()">Bilder hinzufügen</button>
+  <label *ngIf="project.numberOfImages > 0">Bild {{ project.currentImageIndex + 1 }} von {{ project.numberOfImages }}</label>
+  <label *ngIf="project.sumOfCopies > 0">Summe Kopien: {{ project.sumOfCopies }}</label>
 </div>
-<div>
-  <button (click)="CurrentImage.Decrease()">-1</button>
-  <label>Anzahl: {{ CurrentImage.NumberOfCopies }}</label>
-  <button (click)="CurrentImage.Increase()">+1</button>
+<div *ngIf="project.sumOfCopies > 0">
+  <button (click)="project.exportImages()">Bilder exportieren</button>
+  <label>{{ project.exportStatus }}</label>
+</div>
+<div *ngIf="project.images.length > 0">
+  <button (click)="project.currentImage.decrease()">-1</button>
+  <label>Anzahl Kopien: {{ project.currentImage.numberOfCopies }}</label>
+  <button (click)="project.currentImage.increase()">+1</button>
   </div>
-<div>
-  <button (click)="previousImage()">Zurück</button>
-  <button (click)="nextImage()">Weiter</button>
-  <label>{{ CurrentImage.FileName }}</label>
+<div *ngIf="project.images.length > 0">
+  <button (click)="project.previousImage()">Zurück</button>
+  <button (click)="project.nextImage()">Weiter</button>
+  <label>{{ project.currentImage.fileName }}</label>
 </div>
 <div>
-    <img [src]="DomSanitizationService.bypassSecurityTrustUrl(CurrentImage.Path)" width="400"/>
+    <img [src]="DomSanitizationService.bypassSecurityTrustUrl(project.currentImage.path)" width="400"/>
 </div>

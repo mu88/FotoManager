@@ -1,29 +1,29 @@
 import * as pathparse from 'path-parse';
 
 export class Image {
-    Path: string;
-    NumberOfCopies: number;
-    FileExtension: string;
-    FileName: string;
-    FileDirectory: string;
+    path: string;
+    numberOfCopies: number;
+    fileExtension: string;
+    fileName: string;
+    fileDirectory: string;
     
     constructor(path: string) {
-        this.Path = path;
-        this.NumberOfCopies = 0;
+        this.path = path;
+        this.numberOfCopies = 0;
 
-        var parsedSourceFile = pathparse.win32(this.Path);
-        this.FileExtension = parsedSourceFile["ext"];
-        this.FileName = parsedSourceFile["name"];
-        this.FileDirectory = parsedSourceFile["dir"];
+        var parsedSourceFile = pathparse.win32(this.path);
+        this.fileExtension = parsedSourceFile["ext"];
+        this.fileName = parsedSourceFile["name"];
+        this.fileDirectory = parsedSourceFile["dir"];
     }
 
-    Increase() {
-        this.NumberOfCopies++;
+    increase() {
+        this.numberOfCopies++;
     }
 
-    Decrease() {
-        if (this.NumberOfCopies > 0) {
-            this.NumberOfCopies--;
+    decrease() {
+        if (this.numberOfCopies > 0) {
+            this.numberOfCopies--;
         }
     }
 }

@@ -2,11 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Fotomanager</title>
+  <title>FotoManager</title>
   <base href="./">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- the following script is necessary due to this bug:
+  http://electron.rocks/angular2-electron/
+  Otherwise, you cannot access Electron APIs (e. g. for opening a dialog) -->
+  <script>
+    var electron = require('electron');
+    var fs = require('fs-extra');
+  </script>
 </head>
 <body>
   <app-root></app-root>

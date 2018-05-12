@@ -1,0 +1,22 @@
+<div>
+  <button (click)="openImages()">Bilder hinzufügen</button>
+  <label>Anzahl geladener Bilder: {{ NumberOfImages }}</label>
+  <label>Anzahl Kopien: {{ NumberOfCopies }}</label>
+</div>
+<div>
+  <button (click)="exportImages()">Bilder exportieren</button>
+  <label>{{ ExportStatus }}</label>
+</div>
+<div>
+  <button (click)="CurrentImage.Decrease()">-1</button>
+  <label>Anzahl: {{ CurrentImage.NumberOfCopies }}</label>
+  <button (click)="CurrentImage.Increase()">+1</button>
+  </div>
+<div>
+  <button (click)="previousImage()">Zurück</button>
+  <button (click)="nextImage()">Weiter</button>
+  <label>{{ CurrentImage.FileName }}</label>
+</div>
+<div>
+    <img [src]="DomSanitizationService.bypassSecurityTrustUrl(CurrentImage.Path)" width="400"/>
+</div>

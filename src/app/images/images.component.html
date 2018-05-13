@@ -1,26 +1,80 @@
-<div>
-  <button (click)="project.loadProject()">Projekt laden</button>
-  <button *ngIf="project.images.length > 0" (click)="project.saveProject()">Projekt speichern</button>
+<div class="pos-f-t">
+  <nav class="navbar navbar-dark bg-dark">
+    <button (click)="project.loadProject()" class="navbar-toggler">
+      <span class="fa fa-folder-open fa-sm"></span>
+      <br>
+      <span class="small">Projekt öffnen</span>
+    </button>
+    <button *ngIf="project.images.length > 0" (click)="project.saveProject()" class="navbar-toggler">
+      <span class="fa fa-save fa-sm"></span>
+      <br>
+      <span class="small">Projekt speichern</span>
+    </button>
+    <button (click)="project.openImages()" class="navbar-toggler">
+      <span class="fa fa-plus-square fa-sm"></span>
+      <br>
+      <span class="small">Bilder laden</span>
+    </button>
+    <button *ngIf="project.sumOfCopies > 0" (click)="project.exportImages()" class="navbar-toggler">
+      <span class="fa fa-clone fa-sm"></span>
+      <br>
+      <span class="small">Bilder exportieren</span>
+    </button>
+  </nav>
 </div>
-<div>
-  <button (click)="project.openImages()">Bilder hinzufügen</button>
-  <label *ngIf="project.numberOfImages > 0">Bild {{ project.currentImageIndex + 1 }} von {{ project.numberOfImages }}</label>
-  <label *ngIf="project.sumOfCopies > 0">Summe Kopien: {{ project.sumOfCopies }}</label>
-</div>
-<div *ngIf="project.sumOfCopies > 0">
-  <button (click)="project.exportImages()">Bilder exportieren</button>
-  <label>{{ project.exportStatus }}</label>
-</div>
-<div *ngIf="project.images.length > 0">
-  <button (click)="project.currentImage.decrease()">-1</button>
-  <label>Anzahl Kopien: {{ project.currentImage.numberOfCopies }}</label>
-  <button (click)="project.currentImage.increase()">+1</button>
+<div class="container">
+  <div class="row" *ngIf="project.numberOfImages > 0">
+    <div class="col">
+      <div class="card bg-light mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Übersicht</h5>
+          <p class="card-text">Anzahl insgesamt geladene Bilder: {{ project.numberOfImages }}</p>
+          <p class="card-text">Anzahl Kopien insgesamt: {{ project.sumOfCopies }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card bg-light mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Navigation</h5>
+          <button (click)="project.previousImage(10)" class="navbar-toggler" title="10 Bilder zurück">
+            <span class="fa fa-fast-backward fa-lg"></span>
+          </button>
+          <button (click)="project.previousImage(1)" class="navbar-toggler" title="1 Bild zurück">
+            <span class="fa fa-step-backward fa-lg"></span>
+          </button>
+          <button (click)="project.nextImage(1)" class="navbar-toggler" title="1 Bild vorwärts">
+            <span class="fa fa-step-forward fa-lg"></span>
+          </button>
+          <button (click)="project.nextImage(10)" class="navbar-toggler" title="10 Bilder vorwärts">
+            <span class="fa fa-fast-forward fa-lg"></span>
+          </button>
+          <button (click)="project.currentImage.decrease()" class="navbar-toggler" title="1 Kopie entfernen">
+            <span class="fa fa-minus-square fa-lg"></span>
+          </button>
+          <button (click)="project.currentImage.increase()" class="navbar-toggler" title="1 Kopie hinzufügen">
+            <span class="fa fa-plus-square fa-lg"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card bg-light mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Aktuelles Bild</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{ project.currentImage.fileName }}</h6>
+          <p class="card-text">Bild {{ project.currentImageIndex + 1 }} von {{ project.numberOfImages }}</p>
+          <p class="card-text">Anzahl Kopien: {{ project.currentImage.numberOfCopies }}</p>
+        </div>
+      </div>
+    </div>
   </div>
-<div *ngIf="project.images.length > 0">
-  <button (click)="project.previousImage()">Zurück</button>
-  <button (click)="project.nextImage()">Weiter</button>
-  <label>{{ project.currentImage.fileName }}</label>
-</div>
-<div>
-    <img [src]="DomSanitizationService.bypassSecurityTrustUrl(project.currentImage.path)" width="400"/>
+  <div class="row">
+    <div *ngIf="project.currentImage.isLandscape" class="col">
+      <img [src]="domSanitizationService.bypassSecurityTrustUrl(project.currentImage.path)" width="900" />
+    </div>
+    <div *ngIf="!project.currentImage.isLandscape" class="col">
+      <img [src]="domSanitizationService.bypassSecurityTrustUrl(project.currentImage.path)" height="600" />
+    </div>
+  </div>
 </div>

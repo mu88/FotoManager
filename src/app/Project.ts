@@ -8,7 +8,6 @@ export class Project {
     projectPath: string;
     images: Image[];
     currentImageIndex: number;
-    exportStatus: string;
 
     constructor() {
         this.images = [];
@@ -109,8 +108,6 @@ export class Project {
     }
 
     exportImages() {
-        var exportCounter: number = 0;
-        
         var options = {
           title: 'Bitte wählen Sie den Speicherort aus',
           properties: ['openDirectory']
@@ -119,35 +116,34 @@ export class Project {
         electron.remote.dialog.showOpenDialog(options).forEach(destinationDirectory => {
           this.images.forEach(image => {
             for (var i = 0; i < image.numberOfCopies; i++)
-            {
-              this.refreshExportStatus(++exportCounter);
-    
+            {    
               var destinationFile = destinationDirectory + path.sep + image.fileName + "_" + i + image.fileExtension;
     
               fs_extra.copySync(image.path, destinationFile);
             }  
           });
         });
-    
-        this.exportStatus = "";
     }
     
-    refreshExportStatus(exportCounter: number) {
-        var percentage = 100 * (exportCounter / this.sumOfCopies);
-        this.exportStatus = "Exportiere Kopie " + exportCounter + " von " + this.sumOfCopies + " (" +  percentage + "%)";
-    }
-    
-    nextImage() {
+    nextImage(increment: number) {
         var maximumImageIndex = this.images.length - 1;
-        if (this.currentImageIndex < maximumImageIndex) {
-          this.currentImageIndex++;
+        var imageIndexAfterIncrement = this.currentImageIndex + increment;
+        if (imageIndexAfterIncrement > maximumImageIndex) {
+            this.currentImageIndex = maximumImageIndex;
+        }
+        else {
+            this.currentImageIndex = imageIndexAfterIncrement;
         }
     }
     
-    previousImage() {
+    previousImage(decrement: number) {
         var minimumImageIndex = 0;
-        if (this.currentImageIndex > minimumImageIndex) {
-          this.currentImageIndex--;
+        var imageIndexAfterDecrement = this.currentImageIndex - decrement;
+        if (imageIndexAfterDecrement < minimumImageIndex) {
+            this.currentImageIndex = minimumImageIndex;
+        }
+        else {
+            this.currentImageIndex = imageIndexAfterDecrement;
         }
     }
 }

@@ -9,10 +9,10 @@ import { Project } from "../Project";
 })
 export class ImagesComponent implements OnInit {
   project: Project;
-  DomSanitizationService: DomSanitizer;
+  domSanitizationService: DomSanitizer;
 
   constructor(private _DomSanitizationService: DomSanitizer) {
-    this.DomSanitizationService = _DomSanitizationService;
+    this.domSanitizationService = _DomSanitizationService;
     this.project = new Project();
   }
 

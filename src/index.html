@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>FotoFlipper</title>
+  <base href="./">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- the following script is necessary due to this bug:
+  http://electron.rocks/angular2-electron/
+  Otherwise, you cannot access Electron APIs (e. g. for opening a dialog) -->
+  <script>
+    var electron = require('electron');
+    var fs_extra = require('fs-extra');
+    var sizeOf = require('image-size');
+  </script>
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>

@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}\\App.js",
+            "program": "${workspaceFolder}\\main.js",
             "cwd": "${workspaceRoot}",
             "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
             "runtimeArgs": [
@@ -16,9 +16,10 @@
                 "--enable-logging"
             ],
             "outFiles": [
-                "${workspaceFolder}/**/*.js"
+                "${workspaceFolder}/dist/**/*.js"
             ],
-            "preLaunchTask": "Transpile TypeScript"
+            "sourceMaps": true,
+            "preLaunchTask": "build"
         }
     ]
 }

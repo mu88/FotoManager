@@ -8,9 +8,14 @@ export class Project {
     projectPath: string;
     images: Image[];
     currentImageIndex: number;
+    duringExport: boolean;
+    progressValue: number;
+    exportStatus: string;
 
     constructor() {
         this.images = [];
+        this.duringExport = false;
+        this.progressValue = 0;
     }
 
     get numberOfImages(): number {
@@ -40,7 +45,7 @@ export class Project {
             title: 'Bitte wählen Sie den Speicherort der Projektdatei aus',
             defaultPath: electron.remote.app.getAppPath(),
             filters: [
-              {name: "FotoManager-Projektdatei", extensions: ['json']}
+              {name: "Projektdatei", extensions: ['json']}
             ]
           }
       
@@ -72,7 +77,7 @@ export class Project {
         var options = {
           title: 'Bitte wählen Sie Ihre Projektdatei aus',
           filters: [
-            {name: "FotoManager-Projektdatei", extensions: ['json']}
+            {name: "Projektdatei", extensions: ['json']}
           ],
           properties: ['openFile']
         }
@@ -108,6 +113,12 @@ export class Project {
     }
 
     exportImages() {
+        this.duringExport = true;
+        this.progressValue = 0;
+
+        var localImageCounter: number = 0;
+        var destinationDirectory: string;
+
         var options = {
           title: 'Bitte wählen Sie den Speicherort aus',
           properties: ['openDirectory']
@@ -116,13 +127,20 @@ export class Project {
         electron.remote.dialog.showOpenDialog(options).forEach(destinationDirectory => {
           this.images.forEach(image => {
             for (var i = 0; i < image.numberOfCopies; i++)
-            {    
-              var destinationFile = destinationDirectory + path.sep + image.fileName + "_" + i + image.fileExtension;
+            {
+                localImageCounter++;
+                
+                this.progressValue = 100 * (localImageCounter / this.sumOfCopies);
+                
+                var destinationFile = destinationDirectory + path.sep + image.fileName + "_" + i + image.fileExtension;
     
-              fs_extra.copySync(image.path, destinationFile);
+                fs_extra.copySync(image.path, destinationFile);
             }  
           });
         });
+
+        this.duringExport = false;
+        this.exportStatus = "Export erfolgreich abgeschlossen!";
     }
     
     nextImage(increment: number) {

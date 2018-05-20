@@ -1,5 +1,10 @@
 <div class="pos-f-t">
   <nav class="navbar navbar-dark bg-dark">
+    <button (click)="project.openImages()" class="navbar-toggler">
+      <span class="fa fa-plus-square fa-sm"></span>
+      <br>
+      <span class="small">Bilder laden</span>
+    </button>
     <button (click)="project.loadProject()" class="navbar-toggler">
       <span class="fa fa-folder-open fa-sm"></span>
       <br>
@@ -10,11 +15,6 @@
       <br>
       <span class="small">Projekt speichern</span>
     </button>
-    <button (click)="project.openImages()" class="navbar-toggler">
-      <span class="fa fa-plus-square fa-sm"></span>
-      <br>
-      <span class="small">Bilder laden</span>
-    </button>
     <button *ngIf="project.sumOfCopies > 0" (click)="project.exportImages()" class="navbar-toggler">
       <span class="fa fa-clone fa-sm"></span>
       <br>
@@ -23,48 +23,46 @@
   </nav>
 </div>
 <div class="container">
-  <div class="row" *ngIf="project.numberOfImages > 0">
+  <div class="row">
+    <div class="col">
+      <div *ngIf="project.duringExport" class="progress">
+          <div class="progress-bar" role="progressbar" [style.width]="project.progressValue + '%'" [attr.aria-valuenow]="project.progressValue" aria-valuemin="0" aria-valuemax="100">{{ project.progressValue }} %</div>
+      </div>
+      <div *ngIf="project.exportStatus" class="alert alert-success" role="alert">{{ project.exportStatus }}</div>
+    </div>
+  </div>
+  <div *ngIf="!project.duringExport && project.numberOfImages > 0" class="row">
     <div class="col">
       <div class="card bg-light mb-3">
         <div class="card-body">
-          <h5 class="card-title">Übersicht</h5>
-          <p class="card-text">Anzahl insgesamt geladene Bilder: {{ project.numberOfImages }}</p>
-          <p class="card-text">Anzahl Kopien insgesamt: {{ project.sumOfCopies }}</p>
+          <h5 class="card-title text-dark">Aktuelles Bild ({{ project.currentImage.fileName }})</h5>
+          <p class="card-text text-dark" style="height: 1rem;">
+            <button (click)="project.previousImage(1)" class="navbar-toggler" title="1 Bild zurück">
+              <span class="fa fa-chevron-circle-left fa-lg text-dark"></span>
+            </button>
+            <button (click)="project.nextImage(1)" class="navbar-toggler" title="1 Bild vorwärts">
+              <span class="fa fa-chevron-circle-right fa-lg text-dark"></span>
+            </button>
+            Bild {{ project.currentImageIndex + 1 }} von {{ project.numberOfImages }}          
+          </p>
+          <p class="card-text text-dark" style="height: 1rem;">
+            <button (click)="project.currentImage.increase()" class="navbar-toggler" title="1 Kopie hinzufügen">
+              <span class="fa fa-plus-circle fa-lg text-dark"></span>
+            </button>
+            <button (click)="project.currentImage.decrease()" class="navbar-toggler" title="1 Kopie entfernen">
+              <span class="fa fa-minus-circle fa-lg text-dark"></span>
+            </button>
+            Anzahl Kopien: {{ project.currentImage.numberOfCopies }}
+          </p>
         </div>
       </div>
     </div>
     <div class="col">
       <div class="card bg-light mb-3">
         <div class="card-body">
-          <h5 class="card-title">Navigation</h5>
-          <button (click)="project.previousImage(10)" class="navbar-toggler" title="10 Bilder zurück">
-            <span class="fa fa-fast-backward fa-lg"></span>
-          </button>
-          <button (click)="project.previousImage(1)" class="navbar-toggler" title="1 Bild zurück">
-            <span class="fa fa-step-backward fa-lg"></span>
-          </button>
-          <button (click)="project.nextImage(1)" class="navbar-toggler" title="1 Bild vorwärts">
-            <span class="fa fa-step-forward fa-lg"></span>
-          </button>
-          <button (click)="project.nextImage(10)" class="navbar-toggler" title="10 Bilder vorwärts">
-            <span class="fa fa-fast-forward fa-lg"></span>
-          </button>
-          <button (click)="project.currentImage.decrease()" class="navbar-toggler" title="1 Kopie entfernen">
-            <span class="fa fa-minus-square fa-lg"></span>
-          </button>
-          <button (click)="project.currentImage.increase()" class="navbar-toggler" title="1 Kopie hinzufügen">
-            <span class="fa fa-plus-square fa-lg"></span>
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="col">
-      <div class="card bg-light mb-3">
-        <div class="card-body">
-          <h5 class="card-title">Aktuelles Bild</h5>
-          <h6 class="card-subtitle mb-2 text-muted">{{ project.currentImage.fileName }}</h6>
-          <p class="card-text">Bild {{ project.currentImageIndex + 1 }} von {{ project.numberOfImages }}</p>
-          <p class="card-text">Anzahl Kopien: {{ project.currentImage.numberOfCopies }}</p>
+          <h5 class="card-title text-dark">Übersicht</h5>
+          <p class="card-text text-dark" style="height: 1rem;">Geladene Bilder: {{ project.numberOfImages }}</p>
+          <p class="card-text text-dark" style="height: 1rem;">Kopien insgesamt: {{ project.sumOfCopies }}</p>
         </div>
       </div>
     </div>

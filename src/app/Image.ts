@@ -1,4 +1,5 @@
 import * as pathparse from 'path-parse';
+import * as EXIF from 'exif-js';
 
 declare let sizeOf: any;
 
@@ -36,6 +37,15 @@ export class Image {
 
     increase() {
         this.numberOfCopies++;
+    }
+
+    getExifData() {
+        var img = document.getElementById("img");
+        EXIF.getData(img, function() {
+            console.log(this["src"]);
+            console.log(EXIF.getTag(this, "Orientation"));
+            console.log(EXIF.getTag(this, "DateTimeOriginal"));
+        });
     }
 
     decrease() {

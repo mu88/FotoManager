@@ -68,11 +68,14 @@
     </div>
   </div>
   <div class="row">
-    <div *ngIf="project.currentImage.isLandscape" class="col">
-      <img [src]="domSanitizationService.bypassSecurityTrustUrl(project.currentImage.path)" width="900" />
+    <div class="col">
+      <img class="img-fluid" [src]="domSanitizationService.bypassSecurityTrustUrl(project.currentImage.path)" id="img" (click)="project.currentImage.getExifData()" />
+    </div>
+    <!-- <div *ngIf="project.currentImage.isLandscape" class="col">
+      <img class="img-fluid" [src]="domSanitizationService.bypassSecurityTrustUrl(project.currentImage.path)" id="img" />
     </div>
     <div *ngIf="!project.currentImage.isLandscape" class="col">
-      <img [src]="domSanitizationService.bypassSecurityTrustUrl(project.currentImage.path)" height="600" />
-    </div>
+      <img class="img-fluid" [src]="domSanitizationService.bypassSecurityTrustUrl(project.currentImage.path)" id="img" />
+    </div> -->
   </div>
 </div>
